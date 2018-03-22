@@ -9,48 +9,45 @@ public class AppProperties {
 
     private String userName;
     private String password;
+    private String auth;
+    private String starttls;
+    private String host;
+    private String port;
 
-    public static class smtp {
-        private String auth;
-        private String starttls;
-        private String host;
-        private String port;
+    public String getAuth() {
+        return auth;
+    }
 
-        public String getAuth() {
-            return auth;
-        }
+    public AppProperties setAuth(String auth) {
+        this.auth = auth;
+        return this;
+    }
 
-        public smtp setAuth(String auth) {
-            this.auth = auth;
-            return this;
-        }
+    public String getStarttls() {
+        return starttls;
+    }
 
-        public String getStarttls() {
-            return starttls;
-        }
+    public AppProperties setStarttls(String starttls) {
+        this.starttls = starttls;
+        return this;
+    }
 
-        public smtp setStarttls(String starttls) {
-            this.starttls = starttls;
-            return this;
-        }
+    public String getHost() {
+        return host;
+    }
 
-        public String getHost() {
-            return host;
-        }
+    public AppProperties setHost(String host) {
+        this.host = host;
+        return this;
+    }
 
-        public smtp setHost(String host) {
-            this.host = host;
-            return this;
-        }
+    public String getPort() {
+        return port;
+    }
 
-        public String getPort() {
-            return port;
-        }
-
-        public smtp setPort(String port) {
-            this.port = port;
-            return this;
-        }
+    public AppProperties setPort(String port) {
+        this.port = port;
+        return this;
     }
 
     public String getUserName() {

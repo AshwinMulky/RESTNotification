@@ -15,24 +15,27 @@ public class MailUtil {
     @Autowired
     private AppProperties appProperties;
 
-    final String username = appProperties.getUserName();
-    final String password = appProperties.getPassword();
-
     private Session session;
 
     @PostConstruct
     public void init() {
+
         Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth",appProperties.getAuth());
+        props.put("mail.smtp.starttls.enable", appProperties.getStarttls());
+        props.put("mail.smtp.host", appProperties.getHost());
+        props.put("mail.smtp.port", appProperties.getPort());
 
         session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
+                        return new PasswordAuthentication(appProperties.getUserName(), appProperties.getPassword());
                     }
                 });
     }
+
+    public Session getSession() {
+        return session;
+    }
+
 }

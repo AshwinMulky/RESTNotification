@@ -1,15 +1,14 @@
 package com.target.notification.rest.service;
 
 import com.target.notification.config.AppProperties;
+import com.target.notification.dto.NotificationDTO;
+import com.target.notification.util.MailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
-import java.util.Properties;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -18,25 +17,20 @@ import javax.mail.internet.MimeMessage;
 public class MailService {
 
     @Autowired
-    private AppProperties appProperties;
+    private MailUtil mailUtil;
 
-    public void sendMail() {
-
-
+    @Async
+    public void sendMail(NotificationDTO notificationDTO) {
 
         try {
-
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("from-email@gmail.com"));
+            Message message = new MimeMessage(mailUtil.getSession());
+            message.setFrom(new InternetAddress(notificationDTO.getFrom()));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("ashwin.kumar@trivand.com"));
-            message.setSubject("Testing Subject");
-            message.setText("Dear Mail Crawler,"
-                    + "\n\n No spam to my email, please!");
+                    InternetAddress.parse(notificationDTO.getTo()));
+            message.setSubject(notificationDTO.getSubject());
+            message.setText(notificationDTO.getContent());
 
             Transport.send(message);
-
-            System.out.println("Done");
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);
